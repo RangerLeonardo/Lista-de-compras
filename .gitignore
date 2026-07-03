@@ -11,5 +11,7 @@
 *.db-shm
 *.db-wal
 
+Cargo.lock
+
 # Configuraciones locales de IDE
 .vscode/local_settings.json
