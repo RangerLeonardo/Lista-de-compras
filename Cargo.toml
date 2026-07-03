@@ -1,6 +1,13 @@
 [package]
-name = "lista-precios"
+name = "lista-de-compras"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 [dependencies]
+# El servidor web y el motor asíncrono
+axum = "0.8.9"
+tokio = { version = "1.52.3", features = ["full"] }
+
+# El motor de plantillas HTML limpio (sin la feature interna "axum")
+askama = "0.16.0"
+askama_web = { version = "0.16.0", features = ["axum-0.8"] }
