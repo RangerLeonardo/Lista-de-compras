@@ -1,0 +1,15 @@
+# Archivos de compilación de Rust
+/target/
+**/*.rs.bk
+
+# Variables de entorno
+.env
+
+# Archivos de la base de datos SQLite local
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# Configuraciones locales de IDE
+.vscode/local_settings.json
