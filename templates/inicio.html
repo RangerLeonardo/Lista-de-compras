@@ -1,13 +1,296 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" class="scroll-smooth">
 <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Lista de precios</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brandon Adata</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display para el toque vintage serif -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'vintage-beige': '#f4ebd8',
+                        'vintage-text': '#4a3f35',
+                        'vintage-accent': '#8c7a6b',
+                        'vintage-card': '#fdfaf5',
+                        'vintage-border': '#d8cbb8'
+                    },
+                    fontFamily: {
+                        'serif': ['"Playfair Display"', 'serif'],
+                        'body': ['"Lora"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* ================= TEXTURA CROCHET / TELA VINTAGE ================= */
+        /* Genera un patrón entrelazado sutil sobre el fondo beige */
+        .bg-crochet-texture {
+            background-color: #f4ebd8;
+            background-image: 
+                linear-gradient(45deg, transparent 40%, rgba(200, 185, 160, 0.15) 45%, rgba(200, 185, 160, 0.15) 55%, transparent 60%),
+                linear-gradient(-45deg, transparent 40%, rgba(200, 185, 160, 0.15) 45%, rgba(200, 185, 160, 0.15) 55%, transparent 60%),
+                linear-gradient(90deg, rgba(200, 185, 160, 0.05) 50%, transparent 50%),
+                linear-gradient(0deg, rgba(200, 185, 160, 0.05) 50%, transparent 50%);
+            background-size: 8px 8px, 8px 8px, 4px 4px, 4px 4px;
+        }
+
+        /* Ocultar scrollbar del carrusel pero mantener funcionalidad */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Transiciones suaves */
+        .nav-dot { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .nav-dot.active { 
+            transform: rotate(45deg) scale(1.2); 
+            border-radius: 2px; 
+            background-color: #4a3f35; 
+        }
+
+        /* Indicadores del carrusel */
+        .carousel-indicator { transition: all 0.3s ease; }
+        .carousel-indicator.active {
+            background-color: #4a3f35;
+            width: 1.5rem; /* Se estira un poco el activo */
+        }
+        
+        /* Efecto carta vintage */
+        .vintage-card-effect {
+            box-shadow: 2px 4px 12px rgba(0,0,0,0.05), inset 0 0 20px rgba(0,0,0,0.02);
+        }
+    </style>
 </head>
-<body>
-        <h1>Hola mundo en RUST esta es una variable desde el server: {{
-                establecimiento
-            }}</h1>
+<body class="bg-crochet-texture text-vintage-text font-body relative overflow-x-hidden selection:bg-vintage-accent selection:text-white">
+
+    <!-- ================= BARRA DE NAVEGACIÓN LATERAL DERECHA ================= -->
+    <nav class="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center gap-5">
+        <!-- Línea conectora fina estilo hilo -->
+        <div class="absolute w-[1px] h-full bg-vintage-border -z-10 border-l border-dashed border-vintage-accent opacity-50"></div>
+        
+        <a href="#inicio" class="w-8 h-8 flex items-center justify-center group" aria-label="Sección Inicio">
+            <div data-target="inicio" class="nav-dot w-3 h-3 rounded-full bg-vintage-border group-hover:bg-vintage-accent active"></div>
+        </a>
+        <a href="#proyectos" class="w-8 h-8 flex items-center justify-center group" aria-label="Sección Proyectos">
+            <div data-target="proyectos" class="nav-dot w-3 h-3 rounded-full bg-vintage-border group-hover:bg-vintage-accent"></div>
+        </a>
+        <a href="#sobre-mi" class="w-8 h-8 flex items-center justify-center group" aria-label="Sección Sobre mí">
+            <div data-target="sobre-mi" class="nav-dot w-3 h-3 rounded-full bg-vintage-border group-hover:bg-vintage-accent"></div>
+        </a>
+        <a href="#contacto" class="w-8 h-8 flex items-center justify-center group" aria-label="Sección Contacto">
+            <div data-target="contacto" class="nav-dot w-3 h-3 rounded-full bg-vintage-border group-hover:bg-vintage-accent"></div>
+        </a>
+    </nav>
+
+    <!-- ================= CONTENIDO PRINCIPAL ================= -->
+    <div class="relative z-10">
+
+        <!-- SECCIÓN 1: INICIO (Header y Carrusel) -->
+        <section id="inicio" class="min-h-screen flex flex-col justify-center items-center px-6 lg:px-24 py-20 section-spy">
+            
+            <!-- Título Principal Vintage -->
+            <div class="max-w-4xl text-center mb-16 relative">
+                <!-- Pequeño adorno decorativo (corregido viewBox y height para que no se corte) -->
+                <div class="flex justify-center mb-4 opacity-70">
+                    <svg width="40" height="20" viewBox="0 0 40 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 0L23.5 6.5L30 10L23.5 13.5L20 20L16.5 13.5L10 10L16.5 6.5L20 0Z" fill="#8c7a6b"/>
+                        <circle cx="5" cy="10" r="2" fill="#8c7a6b"/>
+                        <circle cx="35" cy="10" r="2" fill="#8c7a6b"/>
+                    </svg>
+                </div>
+                
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold leading-tight tracking-wide">
+                    ¡Hola! soy Brandon Adata y estos son mis <span class="italic text-vintage-accent">trabajos</span>.
+                </h1>
+            </div>
+
+            <!-- Contenedor del Carrusel de Proyectos -->
+            <div class="w-full max-w-5xl flex flex-col items-center">
+                
+                <!-- Wrapper con Scroll Horizontal Snap -->
+                <div id="carousel" class="w-full flex gap-8 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-8 px-4">
+                    
+                    <!-- Proyecto 1 (Cuadrícula Vintage) -->
+                    <div class="project-card snap-center shrink-0 w-[280px] sm:w-[320px] aspect-[4/3] bg-vintage-card vintage-card-effect border border-vintage-border rounded-sm flex flex-col items-center justify-center group hover:-translate-y-1 transition-transform duration-300 cursor-pointer relative overflow-hidden">
+                        <!-- Costura decorativa top/bottom -->
+                        <div class="absolute top-2 left-2 right-2 border-t border-dashed border-vintage-border"></div>
+                        <div class="absolute bottom-2 left-2 right-2 border-b border-dashed border-vintage-border"></div>
+                        
+                        <span class="font-serif text-lg text-vintage-accent group-hover:text-vintage-text transition-colors">Proyecto I</span>
+                        <span class="text-xs text-gray-400 mt-2 font-light tracking-widest uppercase">Ver detalles</span>
+                    </div>
+
+                    <!-- Proyecto 2 -->
+                    <div class="project-card snap-center shrink-0 w-[280px] sm:w-[320px] aspect-[4/3] bg-vintage-card vintage-card-effect border border-vintage-border rounded-sm flex flex-col items-center justify-center group hover:-translate-y-1 transition-transform duration-300 cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-2 left-2 right-2 border-t border-dashed border-vintage-border"></div>
+                        <div class="absolute bottom-2 left-2 right-2 border-b border-dashed border-vintage-border"></div>
+                        
+                        <span class="font-serif text-lg text-vintage-accent group-hover:text-vintage-text transition-colors">Proyecto II</span>
+                        <span class="text-xs text-gray-400 mt-2 font-light tracking-widest uppercase">Ver detalles</span>
+                    </div>
+
+                    <!-- Proyecto 3 -->
+                    <div class="project-card snap-center shrink-0 w-[280px] sm:w-[320px] aspect-[4/3] bg-vintage-card vintage-card-effect border border-vintage-border rounded-sm flex flex-col items-center justify-center group hover:-translate-y-1 transition-transform duration-300 cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-2 left-2 right-2 border-t border-dashed border-vintage-border"></div>
+                        <div class="absolute bottom-2 left-2 right-2 border-b border-dashed border-vintage-border"></div>
+                        
+                        <span class="font-serif text-lg text-vintage-accent group-hover:text-vintage-text transition-colors">Proyecto III</span>
+                        <span class="text-xs text-gray-400 mt-2 font-light tracking-widest uppercase">Ver detalles</span>
+                    </div>
+
+                    <!-- Proyecto 4 -->
+                    <div class="project-card snap-center shrink-0 w-[280px] sm:w-[320px] aspect-[4/3] bg-vintage-card vintage-card-effect border border-vintage-border rounded-sm flex flex-col items-center justify-center group hover:-translate-y-1 transition-transform duration-300 cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-2 left-2 right-2 border-t border-dashed border-vintage-border"></div>
+                        <div class="absolute bottom-2 left-2 right-2 border-b border-dashed border-vintage-border"></div>
+                        
+                        <span class="font-serif text-lg text-vintage-accent group-hover:text-vintage-text transition-colors">Proyecto IV</span>
+                        <span class="text-xs text-gray-400 mt-2 font-light tracking-widest uppercase">Ver detalles</span>
+                    </div>
+                </div>
+
+                <!-- Controles del Carrusel (Flechas e Indicadores Sincronizados) -->
+                <div class="flex items-center gap-6 mt-4">
+                    <button id="btn-prev" class="p-2 text-vintage-accent hover:text-vintage-text transition-colors focus:outline-none" aria-label="Proyecto anterior">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    
+                    <!-- Indicadores (Sincronizados con el scroll horizontal) -->
+                    <div id="carousel-indicators" class="flex gap-2.5">
+                        <div data-index="0" class="carousel-indicator active w-2.5 h-2.5 bg-vintage-border rounded-full cursor-pointer"></div>
+                        <div data-index="1" class="carousel-indicator w-2.5 h-2.5 bg-vintage-border rounded-full cursor-pointer"></div>
+                        <div data-index="2" class="carousel-indicator w-2.5 h-2.5 bg-vintage-border rounded-full cursor-pointer"></div>
+                        <div data-index="3" class="carousel-indicator w-2.5 h-2.5 bg-vintage-border rounded-full cursor-pointer"></div>
+                    </div>
+
+                    <button id="btn-next" class="p-2 text-vintage-accent hover:text-vintage-text transition-colors focus:outline-none" aria-label="Siguiente proyecto">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: PROYECTOS -->
+        <section id="proyectos" class="min-h-screen flex flex-col justify-center items-center px-6 py-20 section-spy border-t border-vintage-border/40 relative">
+            <h2 class="text-3xl font-serif text-vintage-text">Galería de Trabajos</h2>
+            <div class="w-16 h-px bg-vintage-accent mt-4"></div>
+        </section>
+
+        <!-- SECCIÓN 3: SOBRE MÍ -->
+        <section id="sobre-mi" class="min-h-screen flex flex-col justify-center items-center px-6 py-20 section-spy border-t border-vintage-border/40">
+            <h2 class="text-3xl font-serif text-vintage-text">Conóceme</h2>
+            <div class="w-16 h-px bg-vintage-accent mt-4"></div>
+        </section>
+
+        <!-- SECCIÓN 4: CONTACTO -->
+        <section id="contacto" class="min-h-screen flex flex-col justify-center items-center px-6 py-20 section-spy border-t border-vintage-border/40">
+            <h2 class="text-3xl font-serif text-vintage-text">Hablemos</h2>
+            <div class="w-16 h-px bg-vintage-accent mt-4"></div>
+            <p class="mt-6 text-sm text-vintage-accent italic">"Tejiendo ideas en código"</p>
+        </section>
+
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            /* --- 1. LÓGICA DEL CARRUSEL Y SINCRONIZACIÓN DE INDICADORES --- */
+            const carousel = document.getElementById('carousel');
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            const projectCards = document.querySelectorAll('.project-card');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+
+            // Función para actualizar la barrita visual de indicadores basada en el índice actual
+            const updateIndicators = (activeIndex) => {
+                indicators.forEach((ind, index) => {
+                    if (index === activeIndex) {
+                        ind.classList.add('active');
+                        ind.classList.remove('bg-vintage-border');
+                    } else {
+                        ind.classList.remove('active');
+                        ind.classList.add('bg-vintage-border');
+                    }
+                });
+            };
+
+            // Detectar cuál tarjeta está actualmente centrada/visible usando IntersectionObserver horizontal
+            const carouselObserverOptions = {
+                root: carousel,
+                threshold: 0.6 // Se activa cuando al menos el 60% de la tarjeta es visible
+            };
+
+            const carouselObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Encontramos el índice de la tarjeta visible
+                        const index = Array.from(projectCards).indexOf(entry.target);
+                        updateIndicators(index);
+                    }
+                });
+            }, carouselObserverOptions);
+
+            projectCards.forEach(card => carouselObserver.observe(card));
+
+            // Avanzar/Retroceder con botones
+            btnNext.addEventListener('click', () => {
+                // Obtenemos el ancho de la tarjeta + gap dinámicamente
+                const cardWidth = projectCards[0].offsetWidth;
+                const gap = parseInt(window.getComputedStyle(carousel).gap) || 0;
+                carousel.scrollBy({ left: cardWidth + gap, behavior: 'smooth' });
+            });
+            
+            btnPrev.addEventListener('click', () => {
+                const cardWidth = projectCards[0].offsetWidth;
+                const gap = parseInt(window.getComputedStyle(carousel).gap) || 0;
+                carousel.scrollBy({ left: -(cardWidth + gap), behavior: 'smooth' });
+            });
+
+            // Permitir clic en los indicadores para ir directo
+            indicators.forEach(indicator => {
+                indicator.addEventListener('click', (e) => {
+                    const targetIndex = parseInt(e.target.getAttribute('data-index'));
+                    const targetCard = projectCards[targetIndex];
+                    if(targetCard){
+                        // Centrar la tarjeta seleccionada dentro del contenedor scrollable
+                        const scrollLeftPos = targetCard.offsetLeft - carousel.offsetLeft - (carousel.clientWidth - targetCard.clientWidth) / 2;
+                        carousel.scrollTo({ left: scrollLeftPos, behavior: 'smooth' });
+                    }
+                });
+            });
+
+
+            /* --- 2. LÓGICA DEL SCROLLSPY (Barra lateral derecha a Rombo) --- */
+            const sections = document.querySelectorAll('.section-spy');
+            const navDots = document.querySelectorAll('.nav-dot');
+
+            const sectionObserverOptions = {
+                root: null,
+                rootMargin: '-20% 0px -60% 0px', // Ajustado para mejor precisión al scrollear
+                threshold: 0 // Se dispara tan pronto cruza el margen
+            };
+
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navDots.forEach(dot => dot.classList.remove('active'));
+                        
+                        const targetId = entry.target.getAttribute('id');
+                        const activeDot = document.querySelector(`.nav-dot[data-target="${targetId}"]`);
+                        if (activeDot) {
+                            activeDot.classList.add('active');
+                        }
+                    }
+                });
+            }, sectionObserverOptions);
+
+            sections.forEach(section => sectionObserver.observe(section));
+        });
+    </script>
 </body>
 </html>
